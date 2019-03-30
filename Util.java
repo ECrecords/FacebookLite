@@ -54,6 +54,13 @@ public class Util{
         "ToggleAge","ToggleFriend","TogglePost","ToggleProfile","SetStatus", "DisplayProfile"};
         return optionArray;
     }
+    public static int[] getIntOptionArray(){
+        int[] arr = new int[17];
+        for(int i = 0; i < arr.length; i++){
+            arr[i] = i;
+        }
+        return arr;
+    }
     
     /* Boolean Methods */
     public static boolean isArrayInit(Profile[] arr){

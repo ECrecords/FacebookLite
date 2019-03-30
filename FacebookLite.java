@@ -111,10 +111,10 @@ class FacebookLite{
     /*
     Takes in userInput and returns corresponding optionIndex or -1
     */
-    public int findOptionIndex(String input){
+    public int findOptionIndex(int input){
         int index = -1;
-        for(int i = 0; i < Util.getOptionArray().length; i++){
-            if(input.equalsIgnoreCase(Util.getOptionArray()[i])){
+        for(int i = 0; i < Util.getIntOptionArray().length; i++){
+            if(input == Util.getIntOptionArray()[i]){
                 index = i;
             }
         }
@@ -133,9 +133,18 @@ class FacebookLite{
         while(continueLoop){
             //creating a refrence for current Profile
             Profile currentProfile = null;
-            if (facebookLite.profileIndex > -1)
+            if (facebookLite.profileIndex > -1){
                 currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
-            String userInput = facebookLite.scanInput.nextLine();
+            }
+            int userInput = 0;
+            try{
+                userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
+            }
+            catch(NumberFormatException nfe){
+                Util.print("------ INVALID INPUT ------");
+                Util.printInputPrompt();
+                userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
+            }
             int userIndex = facebookLite.findOptionIndex(userInput);
             switch(userIndex){
                 //Exit
@@ -150,7 +159,16 @@ class FacebookLite{
                         Util.printWL("INPUT LAST NAME: ");
                         String last = facebookLite.scanInput.nextLine();
                         Util.printWL("INPUT AGE: ");
-                        int age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                        int age;
+                        try{
+                            age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                        }
+                        catch(NumberFormatException nfe){
+                            Util.print("------ INVALID INPUT ------");
+                            Util.printWL("INPUT AGE: ");
+                            age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                        }
+                        
                         facebookLite.createProfile(name, last, age);
                     }
                     else{
@@ -255,7 +273,7 @@ class FacebookLite{
                         currentProfile.display();
                         break;
                 default:
-                    Util.print("------ INVALID INPUT ------");
+                    Util.print("------ OUT OF RANGE ------");
                     Util.printOptionArray();
                     break;
             }
