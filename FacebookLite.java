@@ -16,6 +16,8 @@ class FacebookLite{
         profileIndex = -1;
         profileArray = new Profile[5];
     }
+    
+    /* Boolean Methods */
     //Return true is more and one profile was created/if more than one profile exists in the Profile[].
     public boolean moreThanOneProfile(){
         int profileCount = 0;
@@ -55,7 +57,9 @@ class FacebookLite{
             return false;
         }
     }
+    //Boolean Methods End.
 
+    /* Actions for FacebookLite */
     public void createProfile(String name, String last, int age){
         Profile profile = new Profile(name,last,age);
         profileIndex++;
@@ -131,7 +135,6 @@ class FacebookLite{
             Profile currentProfile = null;
             if (facebookLite.profileIndex > -1)
                 currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
-            //facebookLite.displayProfile();
             String userInput = facebookLite.scanInput.nextLine();
             int userIndex = facebookLite.findOptionIndex(userInput);
             switch(userIndex){
