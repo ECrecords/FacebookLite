@@ -3,13 +3,13 @@ class Profile implements IDisplay{
     private User user;
     private Post posts;
     private boolean isProfileVisibile;
-
+    
     public Profile(String name, String last, int age){
         user = new User(name, last, age);
         friends = new Friend();
         posts = new Post();
-        isProfileVisibile = true;
     }
+
     public String getName(){
         return user.getName();
     }

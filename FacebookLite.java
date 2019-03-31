@@ -108,6 +108,12 @@ class FacebookLite{
                     Util.print("------ INVALID NAME ------");
                 }
     }
+
+    public void printProfilesNames(){
+        for(int i = 0;i < profileArray.length;i++){
+            Util.printWL(" Profile: " + profileArray[i].getName());
+        }
+    }
     /*
     Takes in userInput and returns corresponding optionIndex or -1
     */
@@ -128,7 +134,6 @@ class FacebookLite{
         FacebookLite facebookLite = new FacebookLite();//creates object from FacebooLite class
         String[] optionArray = Util.getOptionArray();
         Util.printOptionArray();
-        Util.printInputPrompt();
         boolean continueLoop = true;//Flag to check if exited
         while(continueLoop){
             //creating a refrence for current Profile
@@ -136,14 +141,17 @@ class FacebookLite{
             if (facebookLite.profileIndex > -1){
                 currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
             }
+            boolean inputFlag = true;
             int userInput = 0;
-            try{
-                userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
-            }
-            catch(NumberFormatException nfe){
-                Util.print("------ INVALID INPUT ------");
-                Util.printInputPrompt();
-                userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
+            while(inputFlag){
+                try{
+                    Util.printInputPrompt();
+                    userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
+                    inputFlag = false;
+                }
+                catch(NumberFormatException error){
+                    Util.print("------ INVALID INPUT ------");
+                }
             }
             int userIndex = facebookLite.findOptionIndex(userInput);
             switch(userIndex){
@@ -158,18 +166,20 @@ class FacebookLite{
                         String name = facebookLite.scanInput.nextLine();
                         Util.printWL("INPUT LAST NAME: ");
                         String last = facebookLite.scanInput.nextLine();
-                        Util.printWL("INPUT AGE: ");
-                        int age;
-                        try{
-                            age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                        int age = 0;
+                        boolean ageFlag = true;
+                        while(ageFlag){
+                            try{
+                                Util.printWL("INPUT AGE: ");
+                                age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                                ageFlag = false;
+                            }
+                            catch(NumberFormatException nfe){
+                                Util.print("------ INVALID INPUT ------");
+                            }
                         }
-                        catch(NumberFormatException nfe){
-                            Util.print("------ INVALID INPUT ------");
-                            Util.printWL("INPUT AGE: ");
-                            age = Integer.parseInt(facebookLite.scanInput.nextLine());
-                        }
-                        
                         facebookLite.createProfile(name, last, age);
+                        Util.print("PROFILE CREATED : " + name);
                     }
                     else{
                         Util.print("------ MAX PROFILE EXCEEDED ------");
@@ -188,6 +198,7 @@ class FacebookLite{
                 //Profile - Switch
                 case 4:
                     if(facebookLite.moreThanOneProfile()){
+                        facebookLite.printProfilesNames();
                         Util.printWL("INPUT PROFILE NAME: ");
                         String userName = facebookLite.scanInput.nextLine();
                         facebookLite.switchProfile(userName);
@@ -277,7 +288,6 @@ class FacebookLite{
                     Util.printOptionArray();
                     break;
             }
-            Util.printInputPrompt();
         }
     }
 }
