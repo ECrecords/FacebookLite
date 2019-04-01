@@ -20,8 +20,10 @@ class Friend implements IDisplay{
     }
     public void display(){
         if(isFriendsVisible){
-            Util.printWL("FRIENDS: ");
-            friends.print();
+            if(!friends.isEmpty()){
+                Util.printWL("FRIENDS: ");
+                friends.print();
+            }   
         }
     }
     public void toggleVisibility(){

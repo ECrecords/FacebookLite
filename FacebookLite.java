@@ -111,14 +111,15 @@ class FacebookLite{
 
     public void printProfilesNames(){
         int x = 0;
+        Util.print("------ AVAILABLE PROFILES ------");
         for(int i = 0; i < profileArray.length; i++){
             if(x == 2){
                 x = 0;
             }
-                if(profileArray[i] != null){
-                    Util.printWL("Profile: " + profileArray[i].getName() + " ");
-                    x++;
-                }
+            if(profileArray[i] != null){
+                Util.printWL("Profile: " + profileArray[i].getName() + "\t");
+                x++;
+            }
         }
     }
     /*
@@ -205,7 +206,7 @@ class FacebookLite{
                 case 4:
                     if(facebookLite.moreThanOneProfile()){
                         facebookLite.printProfilesNames();
-                        Util.printWL("INPUT PROFILE NAME: ");
+                        Util.printWL("\n\nINPUT PROFILE NAME: ");
                         String userName = facebookLite.scanInput.nextLine();
                         facebookLite.switchProfile(userName);
                     }

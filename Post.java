@@ -20,8 +20,10 @@ class Post implements IDisplay{
     }
     public void display(){
         if(isPostsVisible){
-            Util.printWL("POSTS: ");
-            posts.print();
+            if(!posts.isEmpty()){
+                Util.printWL("POSTS: ");
+                posts.print();
+            }       
         }
     }
     public void toggleVisibility(){
