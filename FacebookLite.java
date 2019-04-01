@@ -110,8 +110,15 @@ class FacebookLite{
     }
 
     public void printProfilesNames(){
-        for(int i = 0;i < profileArray.length;i++){
-            Util.printWL(" Profile: " + profileArray[i].getName());
+        int x = 0;
+        for(int i = 0; i < profileArray.length; i++){
+            if(x == 2){
+                x = 0;
+            }
+                if(profileArray[i] != null){
+                    Util.printWL("Profile: " + profileArray[i].getName() + " ");
+                    x++;
+                }
         }
     }
     /*
@@ -132,7 +139,6 @@ class FacebookLite{
     //Main
     public static void main(String[] args){
         FacebookLite facebookLite = new FacebookLite();//creates object from FacebooLite class
-        String[] optionArray = Util.getOptionArray();
         Util.printOptionArray();
         boolean continueLoop = true;//Flag to check if exited
         while(continueLoop){
@@ -282,7 +288,7 @@ class FacebookLite{
                 case 16:
                     if(!facebookLite.atLeastOneProfile())
                         currentProfile.display();
-                        break;
+                    break;
                 default:
                     Util.print("------ OUT OF RANGE ------");
                     Util.printOptionArray();

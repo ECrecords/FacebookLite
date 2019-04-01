@@ -8,6 +8,7 @@ class Profile implements IDisplay{
         user = new User(name, last, age);
         friends = new Friend();
         posts = new Post();
+        isProfileVisibile = true;
     }
 
     public String getName(){

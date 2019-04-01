@@ -11,19 +11,26 @@ public class Util{
             System.out.print(arr[i] + " | ");
         }
     }
+    //Options Array 
     public static void printOptionArray(){
-        String[] optionArray = getOptionArray();
-        int x = 0;
+        String[][] matrix = new String[][]{
+            {"0 - Exit","\t\t 9 - Remove Last Post"},
+            {"1 - Create Profile","\t10 - Reset Posts"},
+            {"2 - Remove Last Profile","11 - Toggle Age"},
+            {"3 - Reset Profiles","\t12 - Toggle Friend"},
+            {"4 - Switch Profile","\t13 - Toggle Post"},
+            {"5 - Add Friend","\t\t14 - Toggle Profile"},
+            {"6 - Remove Last Friend","\t15 - Set Status" },
+            {"7 - Reset Friends","\t16 - Display Profile"},
+            {"8 - Add Post"},
+        };
         Util.print("------ ENTER ONE OF THE FOLLOWING CHOICES ------");
-        for(int i = 0; i<(optionArray.length-1); i++){
-            if(x == 4){
-                Util.print("");
-                x = 0;
+        for(int row = 0; row < matrix.length; row++){
+            for(int column = 0; column < matrix[row].length; column++){
+                Util.printWL(matrix[row][column] + " ");
             }
-            System.out.print(" " + optionArray[i] + " ");
-            x++;
+            Util.print("");
         }
-        Util.print("\n\nTo Display Profile Enter - " + optionArray[16]);
     }
 
     /* Overloaded Print Methods */
@@ -46,14 +53,6 @@ public class Util{
         }
     }
     
-    /* Options Array */
-    public static String[] getOptionArray(){
-    String[] optionArray = new String[]{"Exit","CreateProfile",
-        "RemoveLastProfile","DeleteAllProfiles","SwitchProfile","AddFriend",
-        "RemoveLastFriend","RemoveAllFriends","AddPost","RemoveLastPost","RemoveAllPosts",
-        "ToggleAge","ToggleFriend","TogglePost","ToggleProfile","SetStatus", "DisplayProfile"};
-        return optionArray;
-    }
     public static int[] getIntOptionArray(){
         int[] arr = new int[17];
         for(int i = 0; i < arr.length; i++){
