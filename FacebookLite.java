@@ -62,8 +62,16 @@ class FacebookLite{
     /* Actions for FacebookLite */
     public void createProfile(String name, String last, int age){
         Profile profile = new Profile(name,last,age);
-        profileIndex++;
-        profileArray[profileIndex] = profile;
+        boolean createFlag = true;
+        while(createFlag){
+            profileIndex++;
+            if(profileArray[profileIndex]== null){
+                profileArray[profileIndex] = profile;
+                Util.print("PROFILE CREATED : " + name);
+                createFlag = false;
+            }
+        }
+        
     }
 
     public Profile removeProfile(){
@@ -148,8 +156,8 @@ class FacebookLite{
             if (facebookLite.profileIndex > -1){
                 currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
             }
-            boolean inputFlag = true;
             int userInput = 0;
+            boolean inputFlag = true;
             while(inputFlag){
                 try{
                     Util.printInputPrompt();
@@ -186,10 +194,9 @@ class FacebookLite{
                             }
                         }
                         facebookLite.createProfile(name, last, age);
-                        Util.print("PROFILE CREATED : " + name);
                     }
                     else{
-                        Util.print("------ MAX PROFILE EXCEEDED ------");
+                        Util.print("------ MAX PROFILES SIZE EXCEEDED ------");
                     }
                     break;
                 //Profile - Remove 
