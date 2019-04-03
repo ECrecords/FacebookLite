@@ -14,6 +14,9 @@ class Profile implements IDisplay{
     public String getName(){
         return user.getName();
     }
+    public String getLast(){
+        return user.getLast();
+    }
     //Checks if stack is full before accepting input
     public boolean isFriendsFull(){
         return friends.isStackFull();

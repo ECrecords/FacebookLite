@@ -57,6 +57,20 @@ class FacebookLite{
             return false;
         }
     }
+    //Checks if recently created profile already exists
+    public boolean profileAlreadyExsists(String name, String last){
+        for(int i = 0; i < profileArray.length; i++){
+            if(profileArray[i] != null){
+                if(profileArray[i].getName().equalsIgnoreCase(name)){
+                    if(profileArray[i].getLast().equalsIgnoreCase(last)){
+                        Util.print("------ Profile Already Exsists ------");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
     //Boolean Methods End.
 
     /* Actions for FacebookLite */
@@ -183,17 +197,20 @@ class FacebookLite{
                         String last = facebookLite.scanInput.nextLine();
                         int age = 0;
                         boolean ageFlag = true;
-                        while(ageFlag){
-                            try{
-                                Util.printWL("INPUT AGE: ");
-                                age = Integer.parseInt(facebookLite.scanInput.nextLine());
-                                ageFlag = false;
+                        boolean existanceFlag = facebookLite.profileAlreadyExsists(name, last);
+                        if(existanceFlag){
+                            while(ageFlag){
+                                try{
+                                    Util.printWL("INPUT AGE: ");
+                                    age = Integer.parseInt(facebookLite.scanInput.nextLine());
+                                    ageFlag = false;
+                                }
+                                catch(NumberFormatException nfe){
+                                    Util.print("------ INVALID INPUT ------");
+                                }
                             }
-                            catch(NumberFormatException nfe){
-                                Util.print("------ INVALID INPUT ------");
-                            }
+                            facebookLite.createProfile(name, last, age);
                         }
-                        facebookLite.createProfile(name, last, age);
                     }
                     else{
                         Util.print("------ MAX PROFILES SIZE EXCEEDED ------");
