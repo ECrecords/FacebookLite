@@ -114,12 +114,14 @@ class FacebookLite{
     Input is the first name to swtich to an array index
     Can be switched to an integer index to support dupplicate names
     */
-    public void switchProfile(String userName){
+    public void switchProfile(String userName, String userLastName){
             int index = -1;
             for(int i = 0; i < profileArray.length; i++){
                 if(profileArray[i] != null){
                     if(userName.equalsIgnoreCase(profileArray[i].getName())){
-                        index = i;
+                        if(userLastName.equalsIgnoreCase(profileArray[i].getLast())){
+                            index = i;
+                        }
                     }
                 }
             }
@@ -136,6 +138,7 @@ class FacebookLite{
         Util.print("------ AVAILABLE PROFILES ------");
         for(int i = 0; i < profileArray.length; i++){
             if(x == 2){
+                Util.print("");
                 x = 0;
             }
             if(profileArray[i] != null){
@@ -230,9 +233,11 @@ class FacebookLite{
                 case 4:
                     if(facebookLite.moreThanOneProfile()){
                         facebookLite.printProfilesNames();
-                        Util.printWL("\n\nINPUT PROFILE NAME: ");
+                        Util.printWL("\n\nINPUT PROFILE DATA - FIRST NAME: ");
                         String userName = facebookLite.scanInput.nextLine();
-                        facebookLite.switchProfile(userName);
+                        Util.printWL("INPUT PROFILE DATA - LAST NAME: ");
+                        String userLastName = facebookLite.scanInput.nextLine();
+                        facebookLite.switchProfile(userName,userLastName);
                     }
                     else{
                         Util.print("------ NEED MORE THAN ONE PROFILE ------");
