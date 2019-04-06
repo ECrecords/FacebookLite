@@ -88,17 +88,16 @@ class FacebookLite{
         
     }
 
-    public Profile removeProfile(){
+    public void removeProfile(){
         if(atLeastOneProfile()){
             Util.print("----- THERE ARE NO PROFILES TO DELETE ------");
-            return null; 
+            return; 
         }
         else{
-            Profile temp = profileArray[profileIndex];
+            profileArray[profileIndex] = null;
             profileIndex--;
-            return temp;
             }
-        }
+    }
     public void resetProfiles(){
         if(atLeastOneProfile()){
             Util.print("------ THE ARE NO PROFILES TO RESET ------");
