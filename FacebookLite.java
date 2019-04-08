@@ -19,6 +19,24 @@ class FacebookLite{
     
     /* Boolean Methods */
     //Return true is more and one profile was created/if more than one profile exists in the Profile[].
+    public boolean validateStringInput(String input){
+        int digitCount = 0;
+            for(int i = 0; i < input.length(); i++){
+                if(Character.isDigit(input.charAt(i))){
+                    digitCount++;
+                }
+            }
+        if(digitCount != 0 || input.length() < 1){
+            if(digitCount != 0){
+                Util.print("------ INVALID INPUT: INPUT CONTAINS DIGIT ------");
+            }
+            else{
+                Util.print("------ INVALID INPUT: NEED MORE THAN ONE CHARACTER ------");
+            }
+            return false;
+        }
+        return true;
+    }
     public boolean moreThanOneProfile(){
         int profileCount = 0;
         for(int i = 0; i < profileArray.length; i++){
@@ -26,12 +44,12 @@ class FacebookLite{
                 profileCount++;
             }
         }
-            if(profileCount > 1){
-                return true;
-            }
-            else{
-                return false;
-            }
+        if(profileCount > 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public boolean isMaxProfile(){
         int profileCount = 0;
@@ -40,11 +58,11 @@ class FacebookLite{
                 profileCount++;
             }
         }
-            if(profileCount == 5){
-                return true;
-            }
-            else{
-                return false;
+        if(profileCount == 5){
+            return true;
+        }
+        else{
+            return false;
             }
     }
     //Profile Stack
