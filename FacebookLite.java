@@ -74,62 +74,92 @@ class FacebookLite{
     //Boolean Methods End.
 
     /* Actions for FacebookLite */
-    public void createProfile(String name, String last, int age){
-        Profile profile = new Profile(name,last,age);
-        boolean createFlag = true;
-        while(createFlag){
-            profileIndex++;
-            if(profileArray[profileIndex]== null){
-                profileArray[profileIndex] = profile;
-                Util.print("PROFILE CREATED : " + name);
-                createFlag = false;
+    public void createProfile(){
+        if(!isMaxProfile()){
+            Util.printWL("\nINPUT FIRST NAME: ");
+            String name = scanInput.nextLine();
+            Util.printWL("INPUT LAST NAME: ");
+            String last = scanInput.nextLine();
+            int age = 0;
+            boolean ageFlag = true;
+            boolean existanceFlag = profileAlreadyExsists(name, last);
+            if(existanceFlag){
+                while(ageFlag){
+                    try{
+                        Util.printWL("INPUT AGE: ");
+                        age = Integer.parseInt(scanInput.nextLine());
+                        ageFlag = false;
+                    }
+                    catch(NumberFormatException nfe){
+                        Util.print("------ INVALID INPUT ------");
+                    }
+                }
+                Profile profile = new Profile(name,last,age);
+                boolean createFlag = true;
+                while(createFlag){
+                    profileIndex++;
+                    if(profileArray[profileIndex]== null){
+                        profileArray[profileIndex] = profile;
+                        Util.print("PROFILE CREATED : " + name);
+                        createFlag = false;
+                    }
+                }
             }
+        }
+        else{
+            Util.print("------ MAX PROFILES SIZE EXCEEDED ------");
         }
         
     }
 
     public void removeProfile(){
-        if(atLeastOneProfile()){
-            Util.print("----- THERE ARE NO PROFILES TO DELETE ------");
-            return; 
-        }
-        else{
+        if(!atLeastOneProfile()){
+            Util.print("Profile: " + profileArray[profileIndex].getName() + " --- DELETED");
             profileArray[profileIndex] = null;
             profileIndex--;
-            }
+        }
     }
     public void resetProfiles(){
-        if(atLeastOneProfile()){
-            Util.print("------ THE ARE NO PROFILES TO RESET ------");
-            return;
-        }
-        else{
+        if(!atLeastOneProfile()){
             Util.init(profileArray);
             profileIndex = -1;
-        }
+            Util.print("\nALL PROFILES RESET");
+        }    
     }
     /*
     Only Supports Unique First Names
     Input is the first name to swtich to an array index
     Can be switched to an integer index to support dupplicate names
     */
-    public void switchProfile(String userName, String userLastName){
-            int index = -1;
-            for(int i = 0; i < profileArray.length; i++){
-                if(profileArray[i] != null){
-                    if(userName.equalsIgnoreCase(profileArray[i].getName())){
-                        if(userLastName.equalsIgnoreCase(profileArray[i].getLast())){
-                            index = i;
+    public void switchProfile(){
+        if(!atLeastOneProfile()){
+            if(moreThanOneProfile()){
+                printProfilesNames();
+                Util.printWL("\n\nINPUT PROFILE DATA - FIRST NAME: ");
+                String userName = scanInput.nextLine();
+                Util.printWL("INPUT PROFILE DATA - LAST NAME: ");
+                String userLastName = scanInput.nextLine();
+                int index = -1;
+                for(int i = 0; i < profileArray.length; i++){
+                    if(profileArray[i] != null){
+                        if(userName.equalsIgnoreCase(profileArray[i].getName())){
+                            if(userLastName.equalsIgnoreCase(profileArray[i].getLast())){
+                                index = i;
+                            }
                         }
                     }
                 }
+                    if(index > -1){
+                        profileIndex = index;
+                    }
+                    else{
+                        Util.print("------ INVALID NAME ------");
+                    }
             }
-                if(index > -1){
-                    profileIndex = index;
-                }
-                else{
-                    Util.print("------ INVALID NAME ------");
-                }
+            else{
+                Util.print("------ NEED MORE THAN ONE PROFILE ------");
+            }
+        }            
     }
 
     public void printProfilesNames(){
@@ -192,55 +222,19 @@ class FacebookLite{
                     break;
                 //Create Profile
                 case 1:
-                    if(!facebookLite.isMaxProfile()){
-                        Util.printWL("\nINPUT FIRST NAME: ");
-                        String name = facebookLite.scanInput.nextLine();
-                        Util.printWL("INPUT LAST NAME: ");
-                        String last = facebookLite.scanInput.nextLine();
-                        int age = 0;
-                        boolean ageFlag = true;
-                        boolean existanceFlag = facebookLite.profileAlreadyExsists(name, last);
-                        if(existanceFlag){
-                            while(ageFlag){
-                                try{
-                                    Util.printWL("INPUT AGE: ");
-                                    age = Integer.parseInt(facebookLite.scanInput.nextLine());
-                                    ageFlag = false;
-                                }
-                                catch(NumberFormatException nfe){
-                                    Util.print("------ INVALID INPUT ------");
-                                }
-                            }
-                            facebookLite.createProfile(name, last, age);
-                        }
-                    }
-                    else{
-                        Util.print("------ MAX PROFILES SIZE EXCEEDED ------");
-                    }
+                    facebookLite.createProfile();
                     break;
                 //Profile - Remove 
                 case 2:
-                    if(!facebookLite.atLeastOneProfile())//checking if their is more than one profile
-                        facebookLite.removeProfile();
+                    facebookLite.removeProfile();
                     break;
                 //Profiles - Reset 
                 case 3:
-                    if(!facebookLite.atLeastOneProfile())
-                        facebookLite.resetProfiles();
+                    facebookLite.resetProfiles();
                     break;
                 //Profile - Switch
                 case 4:
-                    if(facebookLite.moreThanOneProfile()){
-                        facebookLite.printProfilesNames();
-                        Util.printWL("\n\nINPUT PROFILE DATA - FIRST NAME: ");
-                        String userName = facebookLite.scanInput.nextLine();
-                        Util.printWL("INPUT PROFILE DATA - LAST NAME: ");
-                        String userLastName = facebookLite.scanInput.nextLine();
-                        facebookLite.switchProfile(userName,userLastName);
-                    }
-                    else{
-                        Util.print("------ NEED MORE THAN ONE PROFILE ------");
-                    }
+                    facebookLite.switchProfile();
                     break;
                 //Friend - add
                 case 5:
