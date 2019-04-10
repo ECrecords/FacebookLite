@@ -4,242 +4,13 @@ Date Completed: March 19, 2018 - 3:30 pm
 App: FacebookLite 
 Purpose: Build a system with basic java language 
 */
-import java.util.Scanner;
-
 class FacebookLite{
-    private Scanner scanInput;
-    private Profile[] profileArray;
-    private int profileIndex;
+    private ProfileStack profileStack;
 
     public FacebookLite(){
-        scanInput = new Scanner(System.in);
-        profileIndex = -1;
-        profileArray = new Profile[5];
-    }
-    
-    /* Input Invalidation */
-    public String validateStrInput(String text){
-        String userInput = "";
-        boolean inputFlag = true;
-        while(inputFlag){
-            Util.printWL(text);
-            userInput = scanInput.nextLine();
-            int digitCount = 0;
-            for(int i = 0; i < userInput.length(); i++){
-                if(Character.isDigit(userInput.charAt(i))){
-                    digitCount++;
-                }
-            }
-            if(digitCount != 0 || userInput.length() < 1){
-                if(digitCount != 0){
-                    Util.print("------ INVALID INPUT: INPUT CONTAINS DIGIT ------");
-                }
-                else{
-                    Util.print("------ INVALID INPUT: NEED MORE THAN ONE CHARACTER ------");
-                }
-            }
-            else{
-                inputFlag = false;
-            }
-        } 
-        return userInput;
+        profileStack = new ProfileStack(5);
     }
 
-    public int validateIntInput(String text){
-        boolean flag = true;
-        int intInput = 0;
-        while(flag){
-            try{
-                Util.printWL(text);
-                intInput = Integer.parseInt(scanInput.nextLine());
-                flag = false;
-            }
-            catch(NumberFormatException nfe){
-                Util.print("------ INVALID INPUT ------");
-            }
-        }
-        return intInput;
-    }
-
-    /* Boolean Methods */
-    //Return true is more and one profile was created/if more than one profile exists in the Profile[].
-    public boolean validateStringInput(String input){
-        int digitCount = 0;
-            for(int i = 0; i < input.length(); i++){
-                if(Character.isDigit(input.charAt(i))){
-                    digitCount++;
-                }
-            }
-        if(digitCount != 0 || input.length() < 1){
-            if(digitCount != 0){
-                Util.print("------ INVALID INPUT: INPUT CONTAINS DIGIT ------");
-            }
-            else{
-                Util.print("------ INVALID INPUT: NEED MORE THAN ONE CHARACTER ------");
-            }
-            return false;
-        }
-        return true;
-    }
-    public boolean moreThanOneProfile(){
-        int profileCount = 0;
-        for(int i = 0; i < profileArray.length; i++){
-            if(profileArray[i] != null) {
-                profileCount++;
-            }
-        }
-        if(profileCount > 1){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    public boolean isMaxProfile(){
-        int profileCount = 0;
-        for(int i = 0; i < profileArray.length; i++){
-            if(profileArray[i] != null) {
-                profileCount++;
-            }
-        }
-        if(profileCount == 5){
-            return true;
-        }
-        else{
-            return false;
-            }
-    }
-    //Profile Stack
-    public boolean atLeastOneProfile(){
-        if(profileIndex == -1){
-            Util.print("------ CREATE PROFILE FIRST ------");
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    //Checks if recently created profile already exists
-    public boolean profileAlreadyExsists(String name, String last){
-        for(int i = 0; i < profileArray.length; i++){
-            if(profileArray[i] != null){
-                if(profileArray[i].getName().equalsIgnoreCase(name)){
-                    if(profileArray[i].getLast().equalsIgnoreCase(last)){
-                        Util.print("------ Profile Already Exsists ------");
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    //Boolean Methods End.
-
-    /* Actions for FacebookLite */
-    public void createProfile(){
-        if(!isMaxProfile()){
-            String name = validateStrInput("\nINPUT FIRST NAME: ");
-            String last = validateStrInput("INPUT LAST NAME: ");
-            boolean existanceFlag = profileAlreadyExsists(name, last);
-            if(existanceFlag){
-                int age = validateIntInput("ENTER AGE: ");
-                Profile profile = new Profile(name,last,age);
-                boolean createFlag = true;
-                while(createFlag){
-                    profileIndex++;
-                    if(profileArray[profileIndex]== null){
-                        profileArray[profileIndex] = profile;
-                        Util.print("PROFILE CREATED : " + name);
-                        createFlag = false;
-                    }
-                }
-            }
-        }
-        else{
-            Util.print("------ MAX PROFILES SIZE EXCEEDED ------");
-        }
-        
-    }
-
-    public void removeProfile(){
-        if(!atLeastOneProfile()){
-            Util.print("Profile: " + profileArray[profileIndex].getName() + " --- DELETED");
-            profileArray[profileIndex] = null;
-            profileIndex--;
-        }
-    }
-    public void resetProfiles(){
-        if(!atLeastOneProfile()){
-            Util.init(profileArray);
-            profileIndex = -1;
-            Util.print("\nALL PROFILES RESET");
-        }    
-    }
-    /*
-    Only Supports Unique First Names
-    Input is the first name to swtich to an array index
-    Can be switched to an integer index to support dupplicate names
-    */
-    public void switchProfile(){
-        if(!atLeastOneProfile()){
-            if(moreThanOneProfile()){
-                printProfilesNames();
-                Util.printWL("\n\nINPUT PROFILE DATA - FIRST NAME: ");
-                String userName = scanInput.nextLine();
-                Util.printWL("INPUT PROFILE DATA - LAST NAME: ");
-                String userLastName = scanInput.nextLine();
-                int index = -1;
-                for(int i = 0; i < profileArray.length; i++){
-                    if(profileArray[i] != null){
-                        if(userName.equalsIgnoreCase(profileArray[i].getName())){
-                            if(userLastName.equalsIgnoreCase(profileArray[i].getLast())){
-                                index = i;
-                            }
-                        }
-                    }
-                }
-                    if(index > -1){
-                        profileIndex = index;
-                    }
-                    else{
-                        Util.print("------ INVALID NAME ------");
-                    }
-            }
-            else{
-                Util.print("------ NEED MORE THAN ONE PROFILE ------");
-            }
-        }            
-    }
-
-    public void printProfilesNames(){
-        int x = 0;
-        Util.print("------ AVAILABLE PROFILES ------");
-        for(int i = 0; i < profileArray.length; i++){
-            if(x == 2){
-                Util.print("");
-                x = 0;
-            }
-            if(profileArray[i] != null){
-                Util.printWL("Profile: " + profileArray[i].getName() + "\t");
-                x++;
-            }
-        }
-    }
-    /*
-    Takes in userInput and returns corresponding optionIndex or -1
-    */
-    public int findOptionIndex(int input){
-        int index = -1;
-        for(int i = 0; i < Util.getIntOptionArray().length; i++){
-            if(input == Util.getIntOptionArray()[i]){
-                index = i;
-            }
-        }
-        return index; 
-    }
-
-
-    
     //Main
     public static void main(String[] args){
         FacebookLite facebookLite = new FacebookLite();//creates object from FacebooLite class
@@ -248,11 +19,11 @@ class FacebookLite{
         while(continueLoop){
             //creating a refrence for current Profile
             Profile currentProfile = null;
-            if (facebookLite.profileIndex > -1){
-                currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
+            if (facebookLite.profileStack.getProfileIndex() > -1){
+                currentProfile = facebookLite.profileStack.getProfileArray()[facebookLite.profileStack.getProfileIndex()];
             }
-            int userInput = facebookLite.validateIntInput("\nENTER CHOICE: ");
-            int userIndex = facebookLite.findOptionIndex(userInput);
+            int userInput = facebookLite.profileStack.validateIntInput("\nENTER CHOICE: ");
+            int userIndex = facebookLite.profileStack.findOptionIndex(userInput);
             switch(userIndex){
                 //Exit
                 case 0:
@@ -260,26 +31,26 @@ class FacebookLite{
                     break;
                 //Create Profile
                 case 1:
-                    facebookLite.createProfile();
+                    facebookLite.profileStack.createProfile();
                     break;
                 //Profile - Remove 
                 case 2:
-                    facebookLite.removeProfile();
+                    facebookLite.profileStack.removeProfile();
                     break;
                 //Profiles - Reset 
                 case 3:
-                    facebookLite.resetProfiles();
+                    facebookLite.profileStack.resetProfiles();
                     break;
                 //Profile - Switch
                 case 4:
-                    facebookLite.switchProfile();
+                    facebookLite.profileStack.switchProfile();
                     break;
                 //Friend - add
                 case 5:
-                    if(!facebookLite.atLeastOneProfile()){
+                    if(!facebookLite.profileStack.atLeastOneProfile()){
                         if(!currentProfile.isFriendsFull()){
                             Util.printWL("INPUT FREIND'S NAME: ");
-                            String friendname = facebookLite.scanInput.nextLine();
+                            String friendname = facebookLite.profileStack.getScanner().nextLine();
                             currentProfile.addFriend(friendname);
                         }
                         else{
@@ -289,20 +60,20 @@ class FacebookLite{
                     break;
                 //Friend - remove
                 case 6:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.removeFriend();
                     break;
                 //Friends - reset
                 case 7:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.removeAllFriends();
                     break;
                 //Post - add
                 case 8:
-                    if(!facebookLite.atLeastOneProfile()){
+                    if(!facebookLite.profileStack.atLeastOneProfile()){
                         if(!currentProfile.isPostsFull()){
                             Util.printWL("INPUT POST: ");
-                            String post = facebookLite.scanInput.nextLine();
+                            String post = facebookLite.profileStack.getScanner().nextLine();
                             currentProfile.addPost(post);
                         }
                         else{
@@ -312,42 +83,42 @@ class FacebookLite{
                     break;
                 //Post - remove
                 case 9:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.removePost();
                     break;
                 //Post - reset
                 case 10:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.removeAllPosts();
                     break;
                 //Toggles 
                 case 11:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.toggleAge();
                     break;
                 case 12:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.toggleFriends();
                     break;
                 case 13:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.togglePosts();
                     break;
                 case 14:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.toggleVisibility();
                     break;
                 //Sets Status
                 case 15:
-                    if(!facebookLite.atLeastOneProfile()){
+                    if(!facebookLite.profileStack.atLeastOneProfile()){
                         Util.printWL("SET STATUS: ");
-                        String status = facebookLite.scanInput.nextLine();
+                        String status = facebookLite.profileStack.getScanner().nextLine();
                         currentProfile.setStatus(status);
                     }
                     break;
                 //Displays current
                 case 16:
-                    if(!facebookLite.atLeastOneProfile())
+                    if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.display();
                     break;
                 default:
