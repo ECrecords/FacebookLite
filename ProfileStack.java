@@ -36,7 +36,7 @@ public class ProfileStack{
                     digitCount++;
                 }
             }
-            if(digitCount != 0 || userInput.length() < 1){
+            if(digitCount != 0 || userInput.length() < 2){
                 if(digitCount != 0){
                     Util.print("------ INVALID INPUT: INPUT CONTAINS DIGIT ------");
                 }
@@ -135,7 +135,7 @@ public class ProfileStack{
                     profileIndex++;
                     if(profileArray[profileIndex]== null){
                         profileArray[profileIndex] = profile;
-                        Util.print("PROFILE CREATED : " + name);
+                        Util.print("PROFILE CREATED : " + profileArray[profileIndex].getName() + " (" + profileArray[profileIndex].getID() + ")");
                         break;
                     }
                 }
@@ -154,6 +154,7 @@ public class ProfileStack{
             profileIndex--;
         }
     }
+    
     public void resetProfiles(){
         if(!atLeastOneProfile()){
             Util.init(profileArray);
@@ -161,11 +162,7 @@ public class ProfileStack{
             Util.print("\nALL PROFILES RESET");
         }    
     }
-    /*
-    Only Supports Unique First Names
-    Input is the first name to swtich to an array index
-    Can be switched to an integer index to support dupplicate names
-    */
+    
     public void switchProfile(){
         if(!atLeastOneProfile()){
             if(moreThanOneProfile()){
@@ -193,9 +190,16 @@ public class ProfileStack{
             }
         }            
     }
+    
+    public void printAllProfiles(){
+        for(int i = 0; i < profileArray.length; i++){
+            profileArray[i].display();
+        }
+    }/* End of Actions */
 
     public void printProfilesNames(){
         int x = 0;
+        Util.print("\nCURRENT PROFILE: " + profileArray[profileIndex].getName() + " (" + profileArray[profileIndex].getID() + ")\n");
         Util.print("------ AVAILABLE PROFILES ------");
         for(int i = 0; i < profileArray.length; i++){
             if(x == 2){
@@ -208,6 +212,8 @@ public class ProfileStack{
             }
         }
     }
+
+    
     /*
     Takes in userInput and returns corresponding optionIndex or -1
     */

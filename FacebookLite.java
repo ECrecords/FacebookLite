@@ -121,6 +121,10 @@ class FacebookLite{
                     if(!facebookLite.profileStack.atLeastOneProfile())
                         currentProfile.display();
                     break;
+                case 17:
+                    if(!facebookLite.profileStack.atLeastOneProfile())
+                        facebookLite.profileStack.printAllProfiles();
+                    break;
                 default:
                     Util.print("------ OUT OF RANGE ------");
                     Util.printOptionArray();
