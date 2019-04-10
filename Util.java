@@ -1,8 +1,5 @@
 public class Util{
     /* Print Methods */
-    public static void printInputPrompt(){
-        System.out.print("\nENTER CHOICE: ");
-    }
     public static void printWL(String s){
         System.out.print(s);
     }

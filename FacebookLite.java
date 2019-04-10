@@ -17,6 +17,50 @@ class FacebookLite{
         profileArray = new Profile[5];
     }
     
+    /* Input Invalidation */
+    public String validateStrInput(String text){
+        String userInput = "";
+        boolean inputFlag = true;
+        while(inputFlag){
+            Util.printWL(text);
+            userInput = scanInput.nextLine();
+            int digitCount = 0;
+            for(int i = 0; i < userInput.length(); i++){
+                if(Character.isDigit(userInput.charAt(i))){
+                    digitCount++;
+                }
+            }
+            if(digitCount != 0 || userInput.length() < 1){
+                if(digitCount != 0){
+                    Util.print("------ INVALID INPUT: INPUT CONTAINS DIGIT ------");
+                }
+                else{
+                    Util.print("------ INVALID INPUT: NEED MORE THAN ONE CHARACTER ------");
+                }
+            }
+            else{
+                inputFlag = false;
+            }
+        } 
+        return userInput;
+    }
+
+    public int validateIntInput(String text){
+        boolean flag = true;
+        int intInput = 0;
+        while(flag){
+            try{
+                Util.printWL(text);
+                intInput = Integer.parseInt(scanInput.nextLine());
+                flag = false;
+            }
+            catch(NumberFormatException nfe){
+                Util.print("------ INVALID INPUT ------");
+            }
+        }
+        return intInput;
+    }
+
     /* Boolean Methods */
     //Return true is more and one profile was created/if more than one profile exists in the Profile[].
     public boolean validateStringInput(String input){
@@ -94,24 +138,11 @@ class FacebookLite{
     /* Actions for FacebookLite */
     public void createProfile(){
         if(!isMaxProfile()){
-            Util.printWL("\nINPUT FIRST NAME: ");
-            String name = scanInput.nextLine();
-            Util.printWL("INPUT LAST NAME: ");
-            String last = scanInput.nextLine();
-            int age = 0;
-            boolean ageFlag = true;
+            String name = validateStrInput("\nINPUT FIRST NAME: ");
+            String last = validateStrInput("INPUT LAST NAME: ");
             boolean existanceFlag = profileAlreadyExsists(name, last);
             if(existanceFlag){
-                while(ageFlag){
-                    try{
-                        Util.printWL("INPUT AGE: ");
-                        age = Integer.parseInt(scanInput.nextLine());
-                        ageFlag = false;
-                    }
-                    catch(NumberFormatException nfe){
-                        Util.print("------ INVALID INPUT ------");
-                    }
-                }
+                int age = validateIntInput("ENTER AGE: ");
                 Profile profile = new Profile(name,last,age);
                 boolean createFlag = true;
                 while(createFlag){
@@ -220,18 +251,7 @@ class FacebookLite{
             if (facebookLite.profileIndex > -1){
                 currentProfile = facebookLite.profileArray[facebookLite.profileIndex];
             }
-            int userInput = 0;
-            boolean inputFlag = true;
-            while(inputFlag){
-                try{
-                    Util.printInputPrompt();
-                    userInput = Integer.parseInt(facebookLite.scanInput.nextLine());
-                    inputFlag = false;
-                }
-                catch(NumberFormatException error){
-                    Util.print("------ INVALID INPUT ------");
-                }
-            }
+            int userInput = facebookLite.validateIntInput("\nENTER CHOICE: ");
             int userIndex = facebookLite.findOptionIndex(userInput);
             switch(userIndex){
                 //Exit
