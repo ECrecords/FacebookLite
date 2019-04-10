@@ -170,18 +170,14 @@ public class ProfileStack{
         if(!atLeastOneProfile()){
             if(moreThanOneProfile()){
                 printProfilesNames();
-                Util.printWL("\n\nINPUT PROFILE DATA - FIRST NAME: ");
-                String userName = scanInput.nextLine();
-                Util.printWL("INPUT PROFILE DATA - LAST NAME: ");
-                String userLastName = scanInput.nextLine();
+                Util.printWL("\n\nINPUT PROFILE ID : ");
+                String identifier = scanInput.nextLine();
                 int index = -1;
                 for(int i = 0; i < profileArray.length; i++){
                     if(profileArray[i] != null){
-                        if(userName.equalsIgnoreCase(profileArray[i].getName())){
-                            if(userLastName.equalsIgnoreCase(profileArray[i].getLast())){
-                                index = i;
-                                Util.print("SWITCHED TO --- PROFILE: " + profileArray[index].getName());
-                            }
+                        if(identifier.equalsIgnoreCase(profileArray[i].getID())){
+                            index = i;
+                            Util.print("SWITCHED TO --- PROFILE: " + profileArray[index].getName() + " (" + profileArray[index].getID() + ")");
                         }
                     }
                 }
@@ -207,7 +203,7 @@ public class ProfileStack{
                 x = 0;
             }
             if(profileArray[i] != null){
-                Util.printWL("Profile: " + profileArray[i].getName() + "\t");
+                Util.printWL("Profile: " + profileArray[i].getName() + " (" + profileArray[i].getID() + ")" + "\t");
                 x++;
             }
         }
