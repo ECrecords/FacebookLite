@@ -3,12 +3,22 @@ class Profile implements IDisplay{
     private User user;
     private Post posts;
     private boolean isProfileVisibile;
+    private String identifier;
     
     public Profile(String name, String last, int age){
         user = new User(name, last, age);
         friends = new Friend();
         posts = new Post();
         isProfileVisibile = true;
+        generateID(name, last);
+    }
+
+    public void generateID(String name, String last){
+        this.identifier = Character.toString(name.charAt(0)) + Character.toString(last.charAt(0)) + "-" + Integer.toString((name.concat(last)).length());
+    }
+
+    public String getID(){
+        return identifier;
     }
 
     public String getName(){
@@ -28,6 +38,7 @@ class Profile implements IDisplay{
 
     public void display(){
         if(isProfileVisibile){
+            Util.print("ID: " + getID());
             user.display();
             friends.display();
             Util.print("");

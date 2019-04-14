@@ -5,7 +5,9 @@ public class Util{
     }
     public static void print(String[] arr){
         for(int i =0; i < arr.length; i++){
-            System.out.print(arr[i] + " | ");
+            if(arr[i] != null){
+                System.out.print(arr[i] + " | ");
+            }
         }
     }
     //Options Array 
@@ -19,7 +21,7 @@ public class Util{
             {"5 - Add Friend","\t\t14 - Toggle Profile"},
             {"6 - Remove Last Friend","\t15 - Set Status" },
             {"7 - Reset Friends","\t16 - Display Profile"},
-            {"8 - Add Post"},
+            {"8 - Add Post","\t\t17 - Display All Profiles"},
         };
         Util.print("------ ENTER ONE OF THE FOLLOWING CHOICES ------");
         for(int row = 0; row < matrix.length; row++){
@@ -41,7 +43,7 @@ public class Util{
     /* Array Initializer Methods */
     public static void init(String[] arr){
         for(int i = 0; i < arr.length; i++){
-            arr[i] = "";
+            arr[i] = null;
         }
     }
     public static void init(Profile[] arr){
@@ -51,7 +53,7 @@ public class Util{
     }
     
     public static int[] getIntOptionArray(){
-        int[] arr = new int[17];
+        int[] arr = new int[18];
         for(int i = 0; i < arr.length; i++){
             arr[i] = i;
         }
