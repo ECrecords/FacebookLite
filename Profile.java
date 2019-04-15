@@ -14,7 +14,7 @@ class Profile implements IDisplay{
     }
 
     public void generateID(String name, String last){
-        this.identifier = Character.toString(name.charAt(0)) + Character.toString(last.charAt(0)) + "-" + Integer.toString((name.concat(last)).length());
+        this.identifier = Character.toString(name.charAt(0)) + Character.toString(last.charAt(0)) + "-" + (int)(Math.random() * 999 + 1);
     }
 
     public String getID(){

@@ -49,8 +49,7 @@ class FacebookLite{
                 case 5:
                     if(!facebookLite.profileStack.atLeastOneProfile()){
                         if(!currentProfile.isFriendsFull()){
-                            Util.printWL("INPUT FREIND'S NAME: ");
-                            String friendname = facebookLite.profileStack.getScanner().nextLine();
+                            String friendname = facebookLite.profileStack.validateStrInput("INPUT FREIND'S NAME: ");
                             currentProfile.addFriend(friendname);
                         }
                         else{
