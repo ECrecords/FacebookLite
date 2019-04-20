@@ -27,6 +27,7 @@ class FacebookLite{
             switch(userIndex){
                 //Exit
                 case 0:
+                    facebookLite.profileStack.write();
                     continueLoop = false;
                     break;
                 //Create Profile

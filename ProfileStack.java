@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 
 public class ProfileStack{
     private int size;
@@ -121,6 +124,50 @@ public class ProfileStack{
         return true;
     }
     //Boolean Methods End.
+
+    /* IO read & write methods */
+    public void read(){
+    }
+
+    public void write(){
+        try{
+            PrintStream writer = new PrintStream(new File("profile.txt"));
+            for(int i = 0; i < profileArray.length; i++){
+                if(profileArray[i] != null){
+                    writer.print("---Profile(" + i + ")\n");
+                    writer.print("--ID:" + profileArray[i].getID() + ",Name:" + profileArray[i].getName() +",Last:" + 
+                        profileArray[i].getLast() + ",Age:" + profileArray[i].getAge() + ",Status:" + profileArray[i].getStatus() + "\n-Friends:");
+                    for(int j = 0; j < profileArray[i].getFriends().length; j++){
+                        if(profileArray[i].getFriends()[j] != null){
+                            if(j == 4){
+                            writer.print(profileArray[i].getFriends()[j]);
+                            }
+                            else{
+                                writer.print(profileArray[i].getFriends()[j] + ",");
+                            }
+                        }
+                        
+                    }
+                    writer.print("\n-Posts:");
+                    for(int j = 0; j < profileArray[i].getPosts().length; j++){
+                        if(profileArray[i].getPosts()[j] != null){
+                            if(j == 4){
+                                writer.print(profileArray[i].getPosts()[j]);
+                            }
+                            else{
+                                writer.print(profileArray[i].getPosts()[j] + ",");
+                            }
+                        }    
+                    }
+                    writer.println();
+                }
+            }
+            writer.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
+    }
 
     /* Actions for FacebookLite */
     public void createProfile(){

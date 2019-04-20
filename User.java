@@ -8,6 +8,10 @@ class User extends Person implements IDisplay{
         isAgeVisible = true;
 
     }
+
+    public String getStatus(){
+        return status;
+    }
     public void display(){
         Util.printWL("NAME: ");
         Util.print(getName());

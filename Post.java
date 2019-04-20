@@ -2,6 +2,10 @@ class Post implements IDisplay{
     private Stack posts;
     private boolean isPostsVisible;
 
+    public String[] getPostArray(){
+            return posts.getArray();
+    }
+
     public Post(){
         posts = new Stack(5);
         isPostsVisible = true;
