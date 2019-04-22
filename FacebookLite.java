@@ -14,6 +14,7 @@ class FacebookLite{
     //Main
     public static void main(String[] args){
         FacebookLite facebookLite = new FacebookLite();//creates object from FacebooLite class
+        facebookLite.profileStack.read();
         Util.printOptionArray();
         boolean continueLoop = true;//Flag to check if exited
         while(continueLoop){
@@ -27,6 +28,7 @@ class FacebookLite{
             switch(userIndex){
                 //Exit
                 case 0:
+                    facebookLite.profileStack.write();
                     continueLoop = false;
                     break;
                 //Create Profile

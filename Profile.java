@@ -21,11 +21,28 @@ class Profile implements IDisplay{
         return identifier;
     }
 
+    public void setID(String identifier){
+        this.identifier = identifier;
+    }
+
     public String getName(){
         return user.getName();
     }
     public String getLast(){
         return user.getLast();
+    }
+    public int getAge(){
+        return user.getAge();
+    }
+    public String getStatus(){
+        return user.getStatus();
+    }
+
+    public String[] getFriends(){
+        return friends.getFriendArray();
+    }
+    public String[] getPosts(){
+        return posts.getPostArray();
     }
     //Checks if stack is full before accepting input
     public boolean isFriendsFull(){
