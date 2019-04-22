@@ -129,7 +129,7 @@ public class ProfileStack{
     public void read(){
         try{
             Scanner readInput = new Scanner(new File("profile.txt"));
-            Util.print("------ \'profile.txt\' FOUND, LOADING SAVED PROFILES ------" + "\n");
+            Util.print("------ \'profile.txt\' FOUND, LOADING SAVED PROFILES ------");
             while(readInput.hasNextLine()){
                 String profileLine = readInput.nextLine();
 
@@ -188,10 +188,10 @@ public class ProfileStack{
                     " (" + profileArray[profileIndex].getID() + ")" + " --- LOADED");
 
             }
-            Util.print(profileIndex);
+            Util.print(" ");
         }
         catch(IOException e){
-            System.out.println(e);
+            System.out.println("------ NO FILE FOUND ------\n");
         }
     }
 
@@ -281,7 +281,7 @@ public class ProfileStack{
         if(!atLeastOneProfile()){
             if(moreThanOneProfile()){
                 printProfilesNames();
-                Util.printWL("\n\nINPUT PROFILE ID : ");
+                Util.printWL("\nINPUT PROFILE ID : ");
                 String identifier = scanInput.nextLine();
                 int index = -1;
                 for(int i = 0; i < profileArray.length; i++){
