@@ -21,6 +21,10 @@ class Profile implements IDisplay{
         return identifier;
     }
 
+    public void setID(String identifier){
+        this.identifier = identifier;
+    }
+
     public String getName(){
         return user.getName();
     }

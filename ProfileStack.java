@@ -127,6 +127,72 @@ public class ProfileStack{
 
     /* IO read & write methods */
     public void read(){
+        try{
+            Scanner readInput = new Scanner(new File("profile.txt"));
+            Util.print("------ \'profile.txt\' FOUND, LOADING SAVED PROFILES ------" + "\n");
+            while(readInput.hasNextLine()){
+                String profileLine = readInput.nextLine();
+
+                String[] splitTwo = profileLine.split("Profile");
+                int readIndex = Integer.parseInt(splitTwo[1]); //Index found
+
+                String userLine = readInput.nextLine();
+
+                String[] userSplit = userLine.split(",");
+                String[] idSplit = userSplit[0].split("ID:");
+                String readID = idSplit[1]; //ID found
+
+                String[] nameSplit = userSplit[1].split("Name:");
+                String readName = nameSplit[1];
+
+                String[] lastSplit = userSplit[2].split("Last:");
+                String readLast = lastSplit[1];
+
+                String[] ageSplit = userSplit[3].split("Age:");
+                int readAge = Integer.parseInt(ageSplit[1]);
+
+                String[] statusSplit = userSplit[4].split("Status:");
+                String readStatus = statusSplit[1];
+                
+                Profile profile = new Profile(readName,readLast,readAge);
+                profile.setID(readID);
+                profile.setStatus(readStatus);
+                
+                String friendsLine = readInput.nextLine();
+
+                String[] friendsSplit = friendsLine.split("-Friends:");
+                if(friendsSplit.length !=0){
+                    String[] friendsArray = friendsSplit[1].split(",");
+                    for(int i = 0; i < friendsArray.length; i++){
+                        if(friendsArray[i] != null){
+                            profile.addFriend(friendsArray[i]);
+                        }
+                    }
+                }
+                    
+                String postsLine = readInput.nextLine();
+                String[] postsSplit = postsLine.split("-Posts:");
+                if(postsSplit.length != 0){
+                    String[] postsArray = postsSplit[1].split(",");
+                    for(int i = 0; i < postsArray.length; i++){
+                        if(postsArray[i] != null){
+                            profile.addPost(postsArray[i]);
+                        }
+                    }
+                }
+                    
+
+                profileIndex++;
+                profileArray[profileIndex] = profile;
+                Util.print("Profile: " + profileArray[profileIndex].getName() + " " + profileArray[profileIndex].getLast() + 
+                    " (" + profileArray[profileIndex].getID() + ")" + " --- LOADED");
+
+            }
+            Util.print(profileIndex);
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
     }
 
     public void write(){
@@ -134,16 +200,16 @@ public class ProfileStack{
             PrintStream writer = new PrintStream(new File("profile.txt"));
             for(int i = 0; i < profileArray.length; i++){
                 if(profileArray[i] != null){
-                    writer.print("---Profile(" + i + ")\n");
+                    writer.print("---Profile" + i +"\n");
                     writer.print("--ID:" + profileArray[i].getID() + ",Name:" + profileArray[i].getName() +",Last:" + 
                         profileArray[i].getLast() + ",Age:" + profileArray[i].getAge() + ",Status:" + profileArray[i].getStatus() + "\n-Friends:");
                     for(int j = 0; j < profileArray[i].getFriends().length; j++){
                         if(profileArray[i].getFriends()[j] != null){
-                            if(j == 4){
-                            writer.print(profileArray[i].getFriends()[j]);
+                            if(j < 4){
+                                writer.print(profileArray[i].getFriends()[j] + ",");
                             }
                             else{
-                                writer.print(profileArray[i].getFriends()[j] + ",");
+                                writer.print(profileArray[i].getFriends()[j]);
                             }
                         }
                         
@@ -151,11 +217,12 @@ public class ProfileStack{
                     writer.print("\n-Posts:");
                     for(int j = 0; j < profileArray[i].getPosts().length; j++){
                         if(profileArray[i].getPosts()[j] != null){
-                            if(j == 4){
-                                writer.print(profileArray[i].getPosts()[j]);
+                            if(j < 4){
+                                writer.print(profileArray[i].getPosts()[j] + ",");
                             }
                             else{
-                                writer.print(profileArray[i].getPosts()[j] + ",");
+                                writer.print(profileArray[i].getPosts()[j]);
+                                
                             }
                         }    
                     }
@@ -240,7 +307,9 @@ public class ProfileStack{
     
     public void printAllProfiles(){
         for(int i = 0; i < profileArray.length; i++){
-            profileArray[i].display();
+            if(profileArray[i] != null){
+                profileArray[i].display();
+            }       
         }
     }/* End of Actions */
 
