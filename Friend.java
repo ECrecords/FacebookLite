@@ -1,7 +1,11 @@
 class Friend implements IDisplay{
     private Stack friends;
     private boolean isFriendsVisible;
-
+    
+    public String[] getFriendArray(){
+            return friends.getArray();
+    }
+    
     public Friend(){
         friends = new Stack(5);
         isFriendsVisible = true;
@@ -18,10 +22,14 @@ class Friend implements IDisplay{
     public void removeAllFriends(){
         friends.reset();
     }
+
+    
     public void display(){
         if(isFriendsVisible){
-            Util.printWL("FRIENDS: ");
-            friends.print();
+            if(!friends.isEmpty()){
+                Util.printWL("FRIENDS: ");
+                friends.print();
+            }   
         }
     }
     public void toggleVisibility(){

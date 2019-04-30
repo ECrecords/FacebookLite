@@ -9,6 +9,9 @@ class Stack {
         arr = new String[size];
         Util.init(arr);
     }
+    public String[] getArray(){
+        return arr;
+    }
     public boolean isEmpty(){
         if(top == -1){
             return true;

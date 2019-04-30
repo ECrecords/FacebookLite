@@ -2,6 +2,10 @@ class Post implements IDisplay{
     private Stack posts;
     private boolean isPostsVisible;
 
+    public String[] getPostArray(){
+            return posts.getArray();
+    }
+
     public Post(){
         posts = new Stack(5);
         isPostsVisible = true;
@@ -20,8 +24,10 @@ class Post implements IDisplay{
     }
     public void display(){
         if(isPostsVisible){
-            Util.printWL("POSTS: ");
-            posts.print();
+            if(!posts.isEmpty()){
+                Util.printWL("POSTS: ");
+                posts.print();
+            }       
         }
     }
     public void toggleVisibility(){

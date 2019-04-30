@@ -3,15 +3,46 @@ class Profile implements IDisplay{
     private User user;
     private Post posts;
     private boolean isProfileVisibile;
-
+    private String identifier;
+    
     public Profile(String name, String last, int age){
         user = new User(name, last, age);
         friends = new Friend();
         posts = new Post();
         isProfileVisibile = true;
+        generateID(name, last);
     }
+
+    public void generateID(String name, String last){
+        this.identifier = Character.toString(name.charAt(0)) + Character.toString(last.charAt(0)) + "-" + (int)(Math.random() * 999 + 1);
+    }
+
+    public String getID(){
+        return identifier;
+    }
+
+    public void setID(String identifier){
+        this.identifier = identifier;
+    }
+
     public String getName(){
         return user.getName();
+    }
+    public String getLast(){
+        return user.getLast();
+    }
+    public int getAge(){
+        return user.getAge();
+    }
+    public String getStatus(){
+        return user.getStatus();
+    }
+
+    public String[] getFriends(){
+        return friends.getFriendArray();
+    }
+    public String[] getPosts(){
+        return posts.getPostArray();
     }
     //Checks if stack is full before accepting input
     public boolean isFriendsFull(){
@@ -24,6 +55,7 @@ class Profile implements IDisplay{
 
     public void display(){
         if(isProfileVisibile){
+            Util.print("ID: " + getID());
             user.display();
             friends.display();
             Util.print("");
